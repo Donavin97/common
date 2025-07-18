@@ -6647,6 +6647,8 @@ void PickerView::announceAmplitude() {
 		double percent = 100.0 * level;
 		QString format = tr("%1 %").arg(QString::number(percent, 'f', 1));
 
+
+		// Uses the amplitude level to calculate the percentage value.
 		SC_D.ui.ampProgress->setRange(0, 100);
 		SC_D.ui.ampProgress->setFormat(format);
 		SC_D.ui.ampProgress->setValue(static_cast<int>(percent));
