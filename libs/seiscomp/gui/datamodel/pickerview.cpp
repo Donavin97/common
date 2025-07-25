@@ -6584,9 +6584,15 @@ void PickerView::updateSubCursor(RecordWidget* w, int s) {
 	SC_D.recordView->currentItem()->widget()->setCursorPos(w->cursorPos());
 	SC_D.recordView->currentItem()->widget()->blockSignals(false);
 
+<<<<<<< HEAD
 
 	if ( true ) {
 		announceAmplitude();
+=======
+	if ( true ) {
+		announceAmplitude();
+	}
+>>>>>>> 8dfac539e602c8de5e5b9693ceed083e5934567e
 }
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -6638,15 +6644,35 @@ void PickerView::announceAmplitude() {
 	}
 
 	if ( !gotAmplitude ) {
+<<<<<<< HEAD
 		SC_D.ui.progressAmpLevel->setEnabled(false);
 		SC_D.ui.progressAmpLevel->setValue(0);
+=======
+		// TODO: Stop playback
+		qDebug() << "-1";
+>>>>>>> 8dfac539e602c8de5e5b9693ceed083e5934567e
 	}
 	else {
 		auto range = SC_D.currentRecord->amplitudeDataRange(SC_D.currentSlot);
 		auto width = range.second - range.first;
 		auto level = width != 0.0 ? (amplitude - range.first) / width : 0.5;
+<<<<<<< HEAD
 		SC_D.ui.progressAmpLevel->setEnabled(true);
 		SC_D.ui.progressAmpLevel->setValue(static_cast<int>(100.0 * level));
+=======
+		// Level is from 0 to 1 where 0 is the lower end of the amplitude range
+		// and 1 is the upper end. 0.5 is the center of the view but not
+		// necessarily the data offset.
+
+		double percent = 100.0 * level;
+		QString format = tr("%1 %").arg(QString::number(percent, 'f', 1));
+
+
+		// Uses the amplitude level to calculate the percentage value.
+		SC_D.ui.ampProgress->setRange(0, 100);
+		SC_D.ui.ampProgress->setFormat(format);
+		SC_D.ui.ampProgress->setValue(static_cast<int>(percent));
+>>>>>>> 8dfac539e602c8de5e5b9693ceed083e5934567e
 	}
 }
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
