@@ -2548,6 +2548,8 @@ void PickerView::init() {
 	SC_D.recordView->setRecordUpdateInterval(1000);
 
 	SC_D.ui.progressAmpLevel->setEnabled(false);
+	SC_D.ui.progressAmpLevel->setTextVisible(false);
+
 
 	connect(SC_D.recordView, SIGNAL(currentItemChanged(RecordViewItem*,RecordViewItem*)),
 	        this, SLOT(itemSelected(RecordViewItem*,RecordViewItem*)));
@@ -3996,6 +3998,7 @@ void PickerView::setCursorText(const QString &text) {
 	SC_D.recordView->setCursorText(text);
 	SC_D.currentRecord->setCursorText(text);
 	SC_D.currentRecord->setActive(text != "");
+	SC_D.ui.progressAmpLevel->setEnabled(!text.isEmpty());
 	auto d = static_cast<PickerTimeWindowDecorator*>(SC_D.currentRecord->decorator());
 	if ( d ) {
 		d->setVisible(false);
@@ -6581,9 +6584,9 @@ void PickerView::updateSubCursor(RecordWidget* w, int s) {
 	SC_D.recordView->currentItem()->widget()->setCursorPos(w->cursorPos());
 	SC_D.recordView->currentItem()->widget()->blockSignals(false);
 
+
 	if ( true ) {
 		announceAmplitude();
-	}
 }
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
