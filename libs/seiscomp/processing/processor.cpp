@@ -146,6 +146,14 @@ bool Settings::getValue(std::string &value, const std::string &parameter) const 
 			value = Core::join(values, ",");
 			return true;
 		}
+
+		// Fallback: try global application config without module prefix
+		// This allows picker.AIC.filter etc. to be read from global config
+		values.clear();
+		if ( localConfiguration->getStrings(values, parameter) ) {
+			value = Core::join(values, ",");
+			return true;
+		}
 	}
 
 	if ( keyParameters && keyParameters->getString(value, parameter) )
@@ -168,6 +176,10 @@ bool Settings::getValue(int &value, const std::string &parameter) const {
 			return true;
 
 		if ( localConfiguration->getInt(value, string(ROOT_CONFIG_KEY) + module + ".global." + parameter) )
+			return true;
+
+		// Fallback: try global application config without module prefix
+		if ( localConfiguration->getInt(value, parameter) )
 			return true;
 	}
 
@@ -192,6 +204,10 @@ bool Settings::getValue(double &value, const std::string &parameter) const {
 
 		if ( localConfiguration->getDouble(value, string(ROOT_CONFIG_KEY) + module + ".global." + parameter) )
 			return true;
+
+		// Fallback: try global application config without module prefix
+		if ( localConfiguration->getDouble(value, parameter) )
+			return true;
 	}
 
 	if ( keyParameters && keyParameters->getDouble(value, parameter) )
@@ -214,6 +230,10 @@ bool Settings::getValue(bool &value, const std::string &parameter) const {
 			return true;
 
 		if ( localConfiguration->getBool(value, string(ROOT_CONFIG_KEY) + module + ".global." + parameter) )
+			return true;
+
+		// Fallback: try global application config without module prefix
+		if ( localConfiguration->getBool(value, parameter) )
 			return true;
 	}
 
